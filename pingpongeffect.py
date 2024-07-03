@@ -26,6 +26,9 @@ class PingPongEffect(BaseEffect):
 		self.redraw_image()
 	
 	def redraw_image(self):
+		if (self.r, self.g, self.b) == (0, 0, 0):
+			self.done = True
+			print("Goodbye cruel world!")
 		self.draw.rectangle(xy=(0, 0, self.ball_width - 1, self.ball_height - 1), fill=(self.r, self.g, self.b))
 	
 	def tick(self, canvas):
@@ -44,5 +47,3 @@ class PingPongEffect(BaseEffect):
 			self.r, self.g, self.b = get_random_colour()
 			self.redraw_image()
 			self.y_mod *= -1
-		if random.randint(0,99) == 0:
-			self.done = True
