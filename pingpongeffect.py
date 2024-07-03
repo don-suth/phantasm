@@ -29,10 +29,10 @@ class PingPongEffect(BaseEffect):
 		self.matrix.SetPixel(self.x, self.y, self.r, self.g, self.b)
 		self.x += self.x_mod
 		self.y += self.y_mod
-		if self.x == self.matrix.width - 1 or self.y == self.matrix.height - 1:
+		if self.x == 0 or self.x == self.matrix.width - 1:
 			self.r, self.g, self.b = get_random_colour()
-			if self.x == self.matrix.width - 1:
-				self.x_mod *= -1
-			if self.y == self.matrix.height - 1:
-				self.y_mod *= -1
+			self.x_mod *= -1
+		if self.y == 0 or self.y == self.matrix.height - 1:
+			self.r, self.g, self.b = get_random_colour()
+			self.y_mod *= -1
 		
