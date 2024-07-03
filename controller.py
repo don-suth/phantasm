@@ -32,11 +32,12 @@ class MatrixController:
 	
 	def run(self):
 		print("Running... Press CTRL-C to stop")
+		frame_canvas = self.matrix.CreateFrameCanvas()
 		while True:
-			frame_canvas = self.matrix.CreateFrameCanvas()
 			for layer in self.effect_layers:
 				layer.tick(frame_canvas)
-			self.matrix.SwapOnVSync(frame_canvas)
+			frame_canvas = self.matrix.SwapOnVSync(frame_canvas)
+			frame_canvas.Clear()
 			self.effect_layers[:] = [layer for layer in self.effect_layers if not layer.done]
 			time.sleep(self.tick_rate)
 	
