@@ -12,10 +12,9 @@ def get_random_colour():
 class PingPongEffect(BaseEffect):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		self.tick_rate = 1
-		#self.x = random.randint(1, self.matrix.width - 1)
-		self.x = 0
-		self.y = random.randint(1, self.matrix.height - 1)
+		self.tick_rate = 0.1
+		self.x = random.randint(1, self.matrix.width - 2)
+		self.y = random.randint(1, self.matrix.height - 2)
 		self.x_mod = random.choice([-1, 1])
 		self.y_mod = random.choice([-1, 1])
 		self.r, self.g, self.b = get_random_colour()
@@ -25,7 +24,15 @@ class PingPongEffect(BaseEffect):
 		# self.x += self.x_mod
 		# self.y += self.y_mod
 		# if (self.x == 0 or self.x
-		print(self.x)
-		self.matrix.SetPixel(self.x, 0, self.r, self.g, self.b)
-		self.x += 1
-		self.r, self.g, self.b = get_random_colour()
+		print(self.x, self.y)
+		self.matrix.Clear()
+		self.matrix.SetPixel(self.x, self.y, self.r, self.g, self.b)
+		self.x += self.x_mod
+		self.y += self.y_mod
+		if self.x == self.matrix.width - 1 or self.y == self.matrix.height - 1:
+			self.r, self.g, self.b = get_random_colour()
+			if self.x == self.matrix.width - 1:
+				self.x_mod *= -1
+			if self.y == self.matrix.height - 1:
+				self.y_mod *= -1
+		
