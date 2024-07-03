@@ -1,4 +1,4 @@
-from controller import MatrixController
+from async_controller import MatrixController
 from text_effect import TextEffect
 import asyncio
 from websockets import serve
