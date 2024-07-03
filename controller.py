@@ -27,25 +27,20 @@ class MatrixController:
 		options.disable_hardware_pulsing = False
 		
 		self.matrix = RGBMatrix(options=options)
-		self.effect_queue: list = []
-		self.current_effect: BaseEffect | None = None
+		self.effect_layers: list[BaseEffect] = []
+		self.tick_rate = 0.02
 	
 	def run(self):
 		print("Running... Press CTRL-C to stop")
 		while True:
-			if self.current_effect is not None:
-				self.current_effect.tick()
-				time.sleep(self.current_effect.tick_rate)
-				if self.current_effect.done:
-					self.current_effect = None
-			else:
-				if len(self.effect_queue) > 0:
-					self.current_effect = self.effect_queue.pop(0)
-					continue
-				else:
-					time.sleep(0.01)
+			frame_canvas = self.matrix.CreateFrameCanvas()
+			for layer in self.effect_layers:
+				layer.tick(frame_canvas)
+			self.matrix.SwapOnVSync(frame_canvas)
+			self.effect_layers[:] = [layer for layer in self.effect_layers if not layer.done]
+			time.sleep(self.tick_rate)
 	
-	def add_to_queue(self, effect: BaseEffect):
-		self.effect_queue.append(effect)
+	def add_to_layers(self, effect_class: type[BaseEffect], *args, **kwargs):
+		self.effect_layers.append(effect_class(self.matrix, *args, **kwargs))
 
 	

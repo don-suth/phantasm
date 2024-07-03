@@ -1,5 +1,6 @@
 from baseeffect import BaseEffect
 import random
+from PIL import Image, ImageDraw
 
 
 def get_random_colour():
@@ -12,7 +13,6 @@ def get_random_colour():
 class PingPongEffect(BaseEffect):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		self.tick_rate = 0.02
 		self.ball_width = 2
 		self.ball_height = 2
 		self.x = random.randint(1, self.matrix.width - self.ball_width - 1)
@@ -20,22 +20,27 @@ class PingPongEffect(BaseEffect):
 		self.x_mod = random.choice([-1, 1])
 		self.y_mod = random.choice([-1, 1])
 		self.r, self.g, self.b = get_random_colour()
+		
+		self.image = Image.new("RGB", (self.ball_width, self.ball_height))
+		self.draw = ImageDraw.Draw(self.image)
+		self.redraw_image()
 	
-	def tick(self):
+	def redraw_image(self):
+		self.draw.rectangle(xy=(0, 0, self.ball_width - 1, self.ball_height - 1), fill=(self.r, self.g, self.b))
+	
+	def tick(self, canvas):
 		# self.matrix.SetPixel(self.x, self.y, self.r, self.g, self.b)
 		# self.x += self.x_mod
 		# self.y += self.y_mod
 		# if (self.x == 0 or self.x
-		self.matrix.Clear()
-		for i in range(self.ball_height):
-			for j in range(self.ball_width):
-				self.matrix.SetPixel(self.x + i, self.y + j, self.r, self.g, self.b)
+		canvas.SetImage(self.image, self.x, self.y)
 		self.x += self.x_mod
 		self.y += self.y_mod
 		if self.x == 0 or self.x + self.ball_width - 1 == self.matrix.width - 1:
 			self.r, self.g, self.b = get_random_colour()
+			self.redraw_image()
 			self.x_mod *= -1
 		if self.y == 0 or self.y + self.ball_height - 1 == self.matrix.height - 1:
 			self.r, self.g, self.b = get_random_colour()
+			self.redraw_image()
 			self.y_mod *= -1
-		
