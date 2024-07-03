@@ -14,12 +14,14 @@ class FontCycler(BaseEffect):
 				self.fonts.append(filename)
 		self.current_font = graphics.Font()
 		self.x_offset = self.matrix.width
-		self.y_offset = self.matrix.height - 1
-		self.text_colour = graphics.Color(255, 255, 255)
+		self.y_offset = self.matrix.height - 10
+		self.text_colour = graphics.Color(255, 0, 0)
 		self.next_font()
 		
 	def next_font(self):
 		if len(self.fonts) > 0:
+			new_font = self.fonts.pop(0)
+			print(new_font)
 			self.current_font.LoadFont(f"fonts/{self.fonts.pop(0)}")
 			self.x_offset = self.matrix.width
 		else:
@@ -31,5 +33,7 @@ class FontCycler(BaseEffect):
 			self.text_colour, SHOWCASE_TEXT
 		)
 		self.x_offset -= 1
+		if self.x_offset == 0:
+			input()
 		if self.x_offset + text_length < 0:
 			self.next_font()
