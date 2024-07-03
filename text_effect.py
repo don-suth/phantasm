@@ -10,7 +10,7 @@ class TextEffect(BaseEffect):
 		self.font = graphics.Font()
 		self.font.LoadFont("fonts/9x15B.bdf")
 		self.x_offset = self.matrix.width
-		self.y_offset = 2
+		self.y_offset = 17
 		self.total_text_length = 0
 		self.author_colour = graphics.Color(88, 101, 242)
 		self.text_colour = graphics.Color(255, 255, 255)
@@ -21,6 +21,7 @@ class TextEffect(BaseEffect):
 	def tick(self, canvas):
 		if self.active_message is None and len(self.messages) > 0:
 			self.active_message = self.messages.pop(0)
+			self.x_offset = self.matrix.width
 		if self.active_message is not None:
 			author_length = graphics.DrawText(
 				canvas, self.font, self.x_offset, self.y_offset,
