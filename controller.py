@@ -39,6 +39,8 @@ class MatrixController:
 			frame_canvas = self.matrix.SwapOnVSync(frame_canvas)
 			frame_canvas.Clear()
 			self.effect_layers[:] = [layer for layer in self.effect_layers if not layer.done]
+			if len(self.effect_layers) == 0:
+				break
 			time.sleep(self.tick_rate)
 	
 	def add_to_layers(self, effect_class: type[BaseEffect], *args, **kwargs):

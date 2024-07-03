@@ -44,3 +44,5 @@ class PingPongEffect(BaseEffect):
 			self.r, self.g, self.b = get_random_colour()
 			self.redraw_image()
 			self.y_mod *= -1
+		if random.randint(0,99) == 0:
+			self.done = True
