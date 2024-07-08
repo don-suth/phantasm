@@ -1,18 +1,25 @@
 from async_controller import MatrixController
-from layers.text_layer import TextLayer
+from layers.connection_status_layer import ConnectionStatusLayer
 import asyncio
-from websockets import serve
+import websockets
 
 
 async def main():
 	controller = MatrixController()
-	text_layer = await controller.add_to_layers(TextLayer)
-	
-	async def append_message(websocket):
-		async for message in websocket:
-			await text_layer.add_message("Donald", message)
-	
-	async with serve(append_message, "localhost", 8765):
-		await controller.run()
+	connection_status_layer = await controller.add_to_layers(ConnectionStatusLayer)
+
+	async for websocket in websockets.connect("localhost"):
+		try:
+			# Connected
+			await connection_status_layer.set_connected()
+			async for message in websocket:
+				# Process message
+				pass
+		except websockets.ConnectionClosed:
+			await connection_status_layer.set_reconnecting()
+			await asyncio.sleep(2)
+			continue
+
+
 
 asyncio.run(main())
