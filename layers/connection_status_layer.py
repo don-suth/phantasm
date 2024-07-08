@@ -9,6 +9,13 @@ FAILED = (255, 0, 0)  # Pure Red
 
 
 class ConnectionStatusLayer(BaseLayer):
+	"""
+	This layer displays a status indicator dot in the lower right corner
+	to display websocket connection status.
+	This dot will display if there is something wrong with the connection,
+	or if it only recently was (re)connected.
+	"""
+
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.connection_status = FAILED
