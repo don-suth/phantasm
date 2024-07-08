@@ -1,8 +1,8 @@
-from baseeffect import BaseEffect
+from layers.base_layer import BaseLayer
 from rgbmatrix import graphics
 
 
-class TextEffect(BaseEffect):
+class TextLayer(BaseLayer):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.messages = []

@@ -1,7 +1,7 @@
 from rgbmatrix import RGBMatrix, FrameCanvas
 
 
-class BaseEffect:
+class BaseLayer:
 	def __init__(self, matrix: RGBMatrix, *args, **kwargs):
 		self.matrix = matrix
 		self.done = False

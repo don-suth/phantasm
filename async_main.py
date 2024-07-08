@@ -1,12 +1,12 @@
 from async_controller import MatrixController
-from text_effect import TextEffect
+from layers.text_layer import TextLayer
 import asyncio
 from websockets import serve
 
 
 async def main():
 	controller = MatrixController()
-	text_layer = await controller.add_to_layers(TextEffect)
+	text_layer = await controller.add_to_layers(TextLayer)
 	
 	async def append_message(websocket):
 		async for message in websocket:

@@ -1,4 +1,4 @@
-from baseeffect import BaseEffect
+from layers.base_layer import BaseLayer
 import random
 from PIL import Image, ImageDraw
 
@@ -10,7 +10,7 @@ def get_random_colour():
 	return r, g, b
 
 
-class PingPongEffect(BaseEffect):
+class PingPongLayer(BaseLayer):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.ball_width = 2

@@ -1,11 +1,11 @@
-from baseeffect import BaseEffect
+from layers.base_layer import BaseLayer
 from rgbmatrix import graphics
 import os
 
 SHOWCASE_TEXT = "Hello, Unigames!"
 
 
-class FontCycler(BaseEffect):
+class FontCycler(BaseLayer):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.fonts = []

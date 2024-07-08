@@ -1,6 +1,6 @@
 import asyncio
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
-from baseeffect import BaseEffect
+from layers.base_layer import BaseLayer
 
 
 class MatrixController:
@@ -27,7 +27,7 @@ class MatrixController:
 		options.disable_hardware_pulsing = False
 		
 		self.matrix = RGBMatrix(options=options)
-		self.effect_layers: list[BaseEffect] = []
+		self.effect_layers: list[BaseLayer] = []
 		self.tick_rate = 0.02
 	
 	async def run(self):
@@ -43,7 +43,7 @@ class MatrixController:
 				break
 			await asyncio.sleep(self.tick_rate)
 	
-	async def add_to_layers(self, effect_class: type[BaseEffect], *args, **kwargs):
+	async def add_to_layers(self, effect_class: type[BaseLayer], *args, **kwargs):
 		new_layer = effect_class(self.matrix, *args, **kwargs)
 		self.effect_layers.append(new_layer)
 		return new_layer

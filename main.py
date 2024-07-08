@@ -1,5 +1,4 @@
 from controller import MatrixController
-from pingpongeffect import PingPongEffect
 from fontcycler import FontCycler
 
 
