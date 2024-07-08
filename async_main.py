@@ -16,8 +16,15 @@ async def main():
 				# Process message
 				pass
 		except websockets.ConnectionClosed:
+			# If the connection was closed unexpectedly: retry in 2 seconds
 			await connection_status_layer.set_reconnecting()
 			await asyncio.sleep(2)
+			continue
+		except websockets.WebSocketException:
+			# All other connection problems: retry in 10 seconds
+			await connection_status_layer.set_failed()
+			await asyncio.sleep(10)
+			await connection_status_layer.set_reconnecting()
 			continue
 
 
