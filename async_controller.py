@@ -47,3 +47,6 @@ class MatrixController:
 		new_layer = effect_class(self.matrix, *args, **kwargs)
 		self.effect_layers.append(new_layer)
 		return new_layer
+	
+	def set_brightness(self, brightness: int):
+		self.matrix.brightness = brightness
