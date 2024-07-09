@@ -3,7 +3,7 @@ from layers.connection_status_layer import ConnectionStatusLayer
 from layers.clock_layer import ClockLayer
 import asyncio
 import websockets
-import os
+
 
 async def main():
 	controller = MatrixController()
@@ -27,10 +27,4 @@ async def main():
 		await connection_status_layer.set_reconnecting()
 		await asyncio.sleep(2)
 
-
-if __name__ == "__main__":
-	base_dir = os.path.dirname(os.path.abspath(__file__))
-	activate_this = os.path.join(base_dir, "venv/bin/activate_this.py")
-	with open(activate_this) as exec_file:
-		exec(exec_file.read())
-	asyncio.run(main())
+asyncio.run(main())
