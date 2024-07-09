@@ -33,5 +33,7 @@ async def main():
 			await asyncio.sleep(10)
 			await connection_status_layer.set_reconnecting()
 			continue
+		except Exception:
+			raise
 
 asyncio.run(main())
