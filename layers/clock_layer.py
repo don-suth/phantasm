@@ -1,6 +1,8 @@
 from base_layer import BaseLayer
 import datetime
 
+from rgbmatrix import graphics
+
 
 class ClockLayer(BaseLayer):
 	"""
@@ -8,7 +10,10 @@ class ClockLayer(BaseLayer):
 	"""
 
 	def __init__(self, *args, **kwargs):
-		self.text_colour = (255, 0, 0)  # Pure Red
+		super().__init__(*args, **kwargs)
+		self.font = graphics.Font()
+		self.font.LoadFont("fonts/9x15B.bdf")
+		self.text_colour = graphics.Color(255, 0, 0)  # Pure Red
 
 	def tick(self, canvas):
 		current_time = datetime.datetime.now()
@@ -21,10 +26,16 @@ class ClockLayer(BaseLayer):
 			am_pm = "PM"
 		else:
 			am_pm = "AM"
-
-		# Draw time
-		pass
-
+		
 		if current_sec % 2 == 0:
 			# Draw seconds indicator
-			pass
+			seconds_indicator = ":"
+		else:
+			seconds_indicator = " "
+		
+		# Draw time
+		graphics.DrawText(
+			canvas, self.font, 2, 17, self.text_colour,
+			text=f"{current_hou}{seconds_indicator}{current_min} {am_pm}"
+		)
+		
