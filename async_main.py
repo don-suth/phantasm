@@ -8,7 +8,7 @@ async def main():
 	controller = MatrixController()
 	connection_status_layer = await controller.add_to_layers(ConnectionStatusLayer)
 
-	async for websocket in websockets.connect("localhost"):
+	async for websocket in websockets.connect("ws://localhost:8765"):
 		try:
 			# Connected
 			await connection_status_layer.set_connected()
