@@ -20,13 +20,13 @@ async def main():
 			async for message in websocket:
 				# Process message
 				print(message)
-		except websockets.ConnectionClosed:
+		except websockets.exceptions.ConnectionClosed:
 			# If the connection was closed unexpectedly: retry in 2 seconds
 			print("ws reconnecting")
 			await connection_status_layer.set_reconnecting()
 			await asyncio.sleep(2)
 			continue
-		except websockets.WebSocketException:
+		except websockets.exceptions.WebSocketException:
 			print("ws failed")
 			# All other connection problems: retry in 10 seconds
 			await connection_status_layer.set_failed()
