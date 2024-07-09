@@ -12,7 +12,7 @@ class ClockLayer(BaseLayer):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.font = graphics.Font()
-		self.font.LoadFont("fonts/9x15B.bdf")
+		self.font.LoadFont("fonts/10x20.bdf")
 		self.text_colour = graphics.Color(255, 0, 0)  # Pure Red
 
 	def tick(self, canvas):
@@ -36,6 +36,6 @@ class ClockLayer(BaseLayer):
 		# Draw time
 		graphics.DrawText(
 			canvas, self.font, 2, 30, self.text_colour,
-			text=f"{current_hou}{seconds_indicator}{current_min:0>2} {am_pm}"
+			text=f"{current_hou: >2}{seconds_indicator}{current_min:0>2}"
 		)
 		
