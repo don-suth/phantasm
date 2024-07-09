@@ -1,4 +1,4 @@
-import websockets
+from websockets.server import serve
 import asyncio
 
 
@@ -8,7 +8,7 @@ async def echo(websocket):
 
 
 async def main():
-	async with websockets.server.serve(echo, "localhost", 8765):
+	async with serve(echo, "localhost", 8765):
 		await asyncio.Future()
 
 asyncio.run(main())
