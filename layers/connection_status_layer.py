@@ -28,12 +28,9 @@ class ConnectionStatusLayer(BaseLayer):
 		self.draw.point((0, 0), fill=self.connection_status)
 
 	async def set_invisible_soon(self, delay: int = 5):
-		try:
-			await asyncio.sleep(delay)
-			self.visible = False
-			self.sleep_task = None
-		except asyncio.CancelledError:
-			pass
+		await asyncio.sleep(delay)
+		self.visible = False
+		self.sleep_task = None
 
 	async def set_connected(self):
 		self.connection_status = CONNECTED
