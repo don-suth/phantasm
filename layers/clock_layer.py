@@ -50,7 +50,7 @@ class ClockLayer(BaseLayer):
 			text=f"{current_min:0>2}"
 		)
 		graphics.DrawText(
-			canvas, self.small_font, 1, 1, self.text_colour,
+			canvas, self.small_font, 1, 31, self.text_colour,
 			text=f"{current_time:%a %d %B}"
 		)
 		
