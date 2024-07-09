@@ -32,5 +32,5 @@ if __name__ == "__main__":
 	base_dir = os.path.dirname(os.path.abspath(__file__))
 	activate_this = os.path.join(base_dir, "venv/bin/activate_this.py")
 	with open(activate_this) as exec_file:
-		exec(exec_file.read())
+		exec(exec_file.read(), {'__file__': exec_file})
 	asyncio.run(main())
