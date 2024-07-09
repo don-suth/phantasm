@@ -1,5 +1,5 @@
 import asyncio
-from base_layer import BaseLayer
+from layers.base_layer import BaseLayer
 from PIL import Image, ImageDraw
 
 

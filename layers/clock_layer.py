@@ -1,4 +1,4 @@
-from base_layer import BaseLayer
+from layers.base_layer import BaseLayer
 import datetime
 
 from rgbmatrix import graphics
