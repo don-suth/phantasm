@@ -22,6 +22,7 @@ class ConnectionStatusLayer(BaseLayer):
 		self.sleep_task: asyncio.Task | None = None
 		self.image = Image.new(mode="RGB", size=(1, 1))
 		self.draw = ImageDraw.Draw(self.image)
+		self.redraw_image()
 		self.visible = True
 
 	def redraw_image(self):
