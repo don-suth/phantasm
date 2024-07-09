@@ -1,4 +1,4 @@
-from websockets import serve, WebSocketServerProtocol
+from websockets.server import serve, WebSocketServerProtocol
 import asyncio
 
 
