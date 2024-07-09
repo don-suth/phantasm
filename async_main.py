@@ -3,6 +3,7 @@ from layers.connection_status_layer import ConnectionStatusLayer
 from layers.clock_layer import ClockLayer
 import asyncio
 import websockets
+from websockets.client import connect as ws_connect
 
 
 async def main():
@@ -10,13 +11,13 @@ async def main():
 	clock_layer = await controller.add_to_layers(ClockLayer)
 	connection_status_layer = await controller.add_to_layers(ConnectionStatusLayer)
 	contoller_run_task = asyncio.create_task(controller.run())
-	async for websocket in websockets.client.connect("ws://localhost:8765"):
+	async for websocket in ws_connect("ws://localhost:8765"):
 		try:
 			# Connected
 			await connection_status_layer.set_connected()
 			async for message in websocket:
 				# Process message
-				pass
+				print(message)
 		except websockets.ConnectionClosed:
 			# If the connection was closed unexpectedly: retry in 2 seconds
 			await connection_status_layer.set_reconnecting()
