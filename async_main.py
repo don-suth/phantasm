@@ -10,7 +10,7 @@ async def main():
 	clock_layer = await controller.add_to_layers(ClockLayer)
 	connection_status_layer = await controller.add_to_layers(ConnectionStatusLayer)
 	contoller_run_task = asyncio.create_task(controller.run())
-	async for websocket in websockets.connect("ws://localhost:8765"):
+	async for websocket in websockets.client.connect("ws://localhost:8765"):
 		try:
 			# Connected
 			await connection_status_layer.set_connected()
