@@ -35,6 +35,7 @@ class ConnectionStatusLayer(BaseLayer):
 
 	async def set_connected(self):
 		self.connection_status = CONNECTED
+		self.visible = True
 		self.redraw_image()
 		if self.sleep_task is not None:
 			self.sleep_task.cancel()
