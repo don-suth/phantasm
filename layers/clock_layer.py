@@ -29,13 +29,22 @@ class ClockLayer(BaseLayer):
 		
 		if current_sec % 2 == 0:
 			# Draw seconds indicator
-			seconds_indicator = ":"
+			seconds_indicator = True
 		else:
-			seconds_indicator = " "
+			seconds_indicator = False
 		
 		# Draw time
 		graphics.DrawText(
-			canvas, self.font, 2, 30, self.text_colour,
-			text=f"{current_hou: >2}{seconds_indicator}{current_min:0>2}"
+			canvas, self.font, 4, 24, self.text_colour,
+			text=f"{current_hou: >2}"
+		)
+		if seconds_indicator:
+			graphics.DrawText(
+				canvas, self.font, 26, 21, self.text_colour,
+				text=":"
+			)
+		graphics.DrawText(
+			canvas, self.font, 36, 24, self.text_colour,
+			text=f"{current_min:0>2}"
 		)
 		
