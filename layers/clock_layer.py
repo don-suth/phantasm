@@ -35,7 +35,7 @@ class ClockLayer(BaseLayer):
 		
 		# Draw time
 		graphics.DrawText(
-			canvas, self.font, 2, 17, self.text_colour,
-			text=f"{current_hou}{seconds_indicator}{current_min} {am_pm}"
+			canvas, self.font, 2, 30, self.text_colour,
+			text=f"{current_hou}{seconds_indicator}{current_min:0>2} {am_pm}"
 		)
 		
