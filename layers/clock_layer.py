@@ -12,7 +12,7 @@ class ClockLayer(BaseLayer):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.font = graphics.Font()
-		self.font.LoadFont("fonts/10x20.bdf")
+		self.font.LoadFont("my_fonts/spleen-12x24.bdf")
 		self.text_colour = graphics.Color(255, 0, 0)  # Pure Red
 
 	def tick(self, canvas):
