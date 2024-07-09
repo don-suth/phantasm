@@ -37,16 +37,16 @@ class ClockLayer(BaseLayer):
 		
 		# Draw time
 		graphics.DrawText(
-			canvas, self.font, 6, 23, self.text_colour,
+			canvas, self.font, 6, 21, self.text_colour,
 			text=f"{current_hou: >2}"
 		)
 		if seconds_indicator:
 			graphics.DrawText(
-				canvas, self.font, 26, 20, self.text_colour,
+				canvas, self.font, 26, 18, self.text_colour,
 				text=":"
 			)
 		graphics.DrawText(
-			canvas, self.font, 34, 23, self.text_colour,
+			canvas, self.font, 34, 21, self.text_colour,
 			text=f"{current_min:0>2}"
 		)
 		if 4 <= current_time.day <= 20 or 24 <= current_time.day <= 30:
@@ -54,7 +54,7 @@ class ClockLayer(BaseLayer):
 		else:
 			day_suffix = ["st", "nd", "rd"][current_time.day % 10 - 1]
 		graphics.DrawText(
-			canvas, self.small_font, 1, 31, self.text_colour,
+			canvas, self.small_font, 1, 30, self.text_colour,
 			text=f"{current_time:%a} {current_time.day}{day_suffix} {current_time:%b}"
 		)
 		
