@@ -27,6 +27,8 @@ class ConnectionStatusLayer(BaseLayer):
 
 	def redraw_image(self):
 		self.draw.point((0, 0), fill=self.connection_status)
+		if self.sleep_task is not None:
+			self.sleep_task.cancel()
 
 	async def set_invisible_soon(self, delay: int = 5):
 		await asyncio.sleep(delay)
@@ -37,8 +39,6 @@ class ConnectionStatusLayer(BaseLayer):
 		self.connection_status = CONNECTED
 		self.visible = True
 		self.redraw_image()
-		if self.sleep_task is not None:
-			self.sleep_task.cancel()
 		self.sleep_task = asyncio.create_task(self.set_invisible_soon(delay=5))
 
 	async def set_reconnecting(self):
