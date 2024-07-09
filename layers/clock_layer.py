@@ -36,7 +36,7 @@ class ClockLayer(BaseLayer):
 		# Draw time
 		graphics.DrawText(
 			canvas, self.font, 6, 23, self.text_colour,
-			text=f"{current_hou:0>2}"
+			text=f"{current_hou: >2}"
 		)
 		if seconds_indicator:
 			graphics.DrawText(
