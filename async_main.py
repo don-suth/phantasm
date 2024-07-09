@@ -9,7 +9,7 @@ import os
 
 async def main():
 	controller = MatrixController()
-	controller.set_brightness(10)
+	controller.set_brightness(50)
 	clock_layer = await controller.add_to_layers(ClockLayer)
 	connection_status_layer = await controller.add_to_layers(ConnectionStatusLayer)
 	contoller_run_task = asyncio.create_task(controller.run())
