@@ -8,6 +8,7 @@ from websockets.client import connect as ws_connect
 
 async def main():
 	controller = MatrixController()
+	controller.set_brightness(10)
 	clock_layer = await controller.add_to_layers(ClockLayer)
 	connection_status_layer = await controller.add_to_layers(ConnectionStatusLayer)
 	contoller_run_task = asyncio.create_task(controller.run())
