@@ -20,13 +20,13 @@ class ConnectionStatusLayer(BaseLayer):
 		super().__init__(*args, **kwargs)
 		self.connection_status = FAILED
 		self.sleep_task: asyncio.Task | None = None
-		self.image = Image.new(mode="RGB", size=(1, 1))
+		self.image = Image.new(mode="RGB", size=(2, 2))
 		self.draw = ImageDraw.Draw(self.image)
 		self.redraw_image()
 		self.visible = True
 
 	def redraw_image(self):
-		self.draw.point((0, 0), fill=self.connection_status)
+		self.draw.rectangle((0, 0, 1, 1), fill=self.connection_status, outline=self.connection_status)
 		if self.sleep_task is not None:
 			self.sleep_task.cancel()
 
@@ -54,7 +54,7 @@ class ConnectionStatusLayer(BaseLayer):
 	def tick(self, canvas):
 		if self.visible:
 			# Set the pixel in the bottom right to the current status colour
-			canvas.SetImage(self.image, canvas.width - 1, canvas.height - 1)
+			canvas.SetImage(self.image, canvas.width - 2, canvas.height - 2)
 		else:
 			# If invisible, just skip the drawing entirely.
 			pass
