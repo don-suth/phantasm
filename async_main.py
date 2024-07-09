@@ -15,16 +15,19 @@ async def main():
 	async for websocket in ws_connect("ws://localhost:8765"):
 		try:
 			# Connected
+			print("ws connected")
 			await connection_status_layer.set_connected()
 			async for message in websocket:
 				# Process message
 				print(message)
 		except websockets.ConnectionClosed:
 			# If the connection was closed unexpectedly: retry in 2 seconds
+			print("ws reconnecting")
 			await connection_status_layer.set_reconnecting()
 			await asyncio.sleep(2)
 			continue
 		except websockets.WebSocketException:
+			print("ws failed")
 			# All other connection problems: retry in 10 seconds
 			await connection_status_layer.set_failed()
 			await asyncio.sleep(10)
