@@ -53,9 +53,18 @@ class ClockLayer(BaseLayer):
 			day_suffix = "th"
 		else:
 			day_suffix = ["st", "nd", "rd"][current_time.day % 10 - 1]
+		
 		graphics.DrawText(
-			canvas, self.small_font, 3, 30, self.text_colour,
-			text=f"{current_time:%a} {current_time.day: >2}{day_suffix} {current_time:%b}"
+			canvas, self.small_font, 4, 30, self.text_colour,
+			text=f"{current_time:%a}"
+		)
+		graphics.DrawText(
+			canvas, self.small_font, 23, 30, self.text_colour,
+			text=f"{current_time: >2}{day_suffix}"
+		)
+		graphics.DrawText(
+			canvas, self.small_font, 46, 30, self.text_colour,
+			text=f"{current_time:%b}"
 		)
 		
 		
