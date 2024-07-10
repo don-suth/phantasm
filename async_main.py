@@ -22,7 +22,7 @@ async def main():
 			await connection_status_layer.set_connected()
 			async for message in websocket:
 				# Process message
-				text_layer.add_message("WS", message)
+				await text_layer.add_message("WS", message)
 		except WebSocketException:
 			print("ws failed")
 			# All other connection problems: retry in 10 seconds
