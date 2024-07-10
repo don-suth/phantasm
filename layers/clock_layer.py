@@ -60,7 +60,7 @@ class ClockLayer(BaseLayer):
 		)
 		graphics.DrawText(
 			canvas, self.small_font, 23, 30, self.text_colour,
-			text=f"{current_time: >2}{day_suffix}"
+			text=f"{current_time.day: >2}{day_suffix}"
 		)
 		graphics.DrawText(
 			canvas, self.small_font, 46, 30, self.text_colour,
