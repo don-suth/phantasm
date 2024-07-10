@@ -22,12 +22,6 @@ class ClockLayer(BaseLayer):
 		current_hou = current_time.hour
 		current_min = current_time.minute
 		current_sec = current_time.second
-
-		if current_hou >= 12:
-			current_hou -= 12
-			am_pm = "PM"
-		else:
-			am_pm = "AM"
 		
 		if current_sec % 2 == 0:
 			# Draw seconds indicator
@@ -38,7 +32,7 @@ class ClockLayer(BaseLayer):
 		# Draw time
 		graphics.DrawText(
 			canvas, self.font, 6, 21, self.text_colour,
-			text=f"{current_hou: >2}"
+			text=f"{current_hou:0>2}"
 		)
 		if seconds_indicator:
 			graphics.DrawText(
