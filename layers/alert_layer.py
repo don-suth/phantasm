@@ -30,6 +30,7 @@ class AlertLayer(BaseLayer):
 		if self.flashing is True:
 			canvas.setImage(self.image, 0, 0)
 			self.flash_border += 1
+			self.redraw_image()
 		if self.flash_border == 100:
 			self.done = True
 
