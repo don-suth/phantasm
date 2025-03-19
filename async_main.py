@@ -3,6 +3,7 @@ from datetime import datetime
 from layers.connection_status_layer import ConnectionStatusLayer
 from layers.clock_layer import ClockLayer
 from layers.text_layer import TextLayer
+from layers.alert_layer import AlertLayer
 import asyncio
 from websockets.client import connect
 from websockets.exceptions import WebSocketException
@@ -29,6 +30,8 @@ async def main():
 				time=datetime.now()
 			).model_dump_json()
 			await websocket.send(authentication)
+			await asyncio.sleep(4)
+			await controller.add_to_layers(AlertLayer)
 			async for message in websocket:
 				# Process message
 				await text_layer.add_message("WS", message)
