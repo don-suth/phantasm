@@ -1,10 +1,12 @@
 from async_controller import MatrixController
+from datetime import datetime
 from layers.connection_status_layer import ConnectionStatusLayer
 from layers.clock_layer import ClockLayer
 from layers.text_layer import TextLayer
 import asyncio
 from websockets.client import connect
 from websockets.exceptions import WebSocketException
+from ritual_events.from_phantasm import AuthenticateAction, AuthenticateData
 import os
 
 
@@ -20,6 +22,13 @@ async def main():
 			# Connected
 			print("ws connected")
 			await connection_status_layer.set_connected()
+			authentication = AuthenticateAction(
+				data=AuthenticateData(
+					token="Hello!"
+				),
+				time=datetime.now()
+			).model_dump_json()
+			await websocket.send(authentication)
 			async for message in websocket:
 				# Process message
 				await text_layer.add_message("WS", message)
