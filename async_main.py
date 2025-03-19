@@ -15,7 +15,7 @@ async def main():
 	connection_status_layer = await controller.add_to_layers(ConnectionStatusLayer)
 	text_layer = await controller.add_to_layers(TextLayer)
 	contoller_run_task = asyncio.create_task(controller.run())
-	async for websocket in connect("ws://localhost:8765"):
+	async for websocket in connect("wss://telepathy.unigames.asn.au:443"):
 		try:
 			# Connected
 			print("ws connected")
