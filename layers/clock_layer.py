@@ -16,19 +16,18 @@ class ClockLayer(BaseLayer):
 		self.small_font = graphics.Font()
 		self.small_font.LoadFont("fonts/5x7.bdf")
 		self.text_colour = graphics.Color(255, 255, 0)  # Yellow
+		self.alternate_seconds_indicator = True
 
 	def tick(self, canvas):
 		current_time = datetime.datetime.now()
 		current_hou = current_time.hour
 		current_min = current_time.minute
 		current_sec = current_time.second
-		
-		if current_sec % 2 == 0:
-			# Draw seconds indicator
-			seconds_indicator = True
-		else:
+
+		seconds_indicator = True
+		if self.alternate_seconds_indicator and current_sec % 2 != 0:
 			seconds_indicator = False
-		
+
 		# Draw time
 		graphics.DrawText(
 			canvas, self.font, 6, 21, self.text_colour,
