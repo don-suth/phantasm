@@ -28,7 +28,7 @@ class AlertLayer(BaseLayer):
 
 	def tick(self, canvas: FrameCanvas):
 		if self.flashing is True:
-			canvas.setImage(self.image, 0, 0)
+			canvas.SetImage(self.image, 0, 0)
 			self.flash_border += 1
 			self.redraw_image()
 		if self.flash_border == 100:
