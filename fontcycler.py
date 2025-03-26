@@ -22,7 +22,7 @@ class FontCycler(BaseLayer):
 		if len(self.fonts) > 0:
 			new_font = self.fonts.pop(0)
 			print(new_font)
-			self.current_font.LoadFont(f"fonts/{self.fonts.pop(0)}")
+			self.current_font.LoadFont(f"fonts/{new_font}")
 			self.x_offset = self.matrix.width
 		else:
 			self.done = True
