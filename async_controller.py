@@ -34,8 +34,8 @@ class MatrixController:
 		print("Running... Press CTRL-C to stop")
 		frame_canvas = self.matrix.CreateFrameCanvas()
 		while True:
-			for layer in self.effect_layers:
-				layer.tick(frame_canvas)
+			for i in range(len(self.effect_layers)):
+				self.effect_layers[i] = self.effect_layers[i].tick(frame_canvas, frame_x_offset=0, frame_y_offset=0)
 			frame_canvas = self.matrix.SwapOnVSync(frame_canvas)
 			frame_canvas.Clear()
 			self.effect_layers[:] = [layer for layer in self.effect_layers if not layer.done]
