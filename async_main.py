@@ -16,7 +16,6 @@ async def main():
 	controller.set_brightness(50)
 	clock_layer = await controller.add_to_layers(ClockLayer)
 	connection_status_layer = await controller.add_to_layers(ConnectionStatusLayer)
-	text_layer = await controller.add_to_layers(TextLayer)
 	contoller_run_task = asyncio.create_task(controller.run())
 	async for websocket in connect("wss://telepathy.unigames.asn.au:443"):
 		try:
@@ -34,7 +33,8 @@ async def main():
 			await controller.add_to_layers(AlertLayer)
 			async for message in websocket:
 				# Process message
-				await text_layer.add_message("WS", message)
+				# await text_layer.add_message("WS", message)
+				pass
 		except WebSocketException:
 			print("ws failed")
 			# All other connection problems: retry in 10 seconds
