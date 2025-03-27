@@ -19,13 +19,13 @@ class SmashCutTextTransition(BaseTransition):
 		if self.transition_complete is False:
 			canvas.Clear()
 			canvas.DrawText(
-				canvas, self.font, x_offset + 7, y_offset + 13,
+				canvas, self.font, frame_x_offset + 7, frame_y_offset + 13,
 				graphics.Color(255, 255, 255), text="Ring"
 			)
 			canvas.DrawText(
-				canvas, self.font, x_offset + 18, y_offset + 27,
+				canvas, self.font, frame_x_offset + 18, frame_y_offset + 27,
 				graphics.Color(255, 255, 255), text="Ring!"
 			)
 			return self
 		else:
-			return self.to_layer.tick(canvas, x_offset, y_offset)
+			return self.to_layer.tick(canvas, frame_x_offset, frame_y_offset)
