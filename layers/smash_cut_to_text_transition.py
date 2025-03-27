@@ -7,7 +7,7 @@ class SmashCutTextTransition(BaseTransition):
 	def __init__(self, matrix: RGBMatrix, from_layer, to_layer, *args, **kwargs):
 		super().__init__(matrix, from_layer, to_layer, *args, **kwargs)
 		self.font = graphics.Font()
-		self.font.LoadFont("fonts/10x20.bdf")
+		self.font.LoadFont("fonts/9x15B.bdf")
 		self.countdown_task = asyncio.create_task(self.delay_transition())
 		self.transition_complete = False
 
