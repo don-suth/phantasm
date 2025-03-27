@@ -1,4 +1,5 @@
 import asyncio
+from rgbmatrix import FrameCanvas
 from layers.base_layer import BaseLayer
 from PIL import Image, ImageDraw
 
@@ -51,10 +52,10 @@ class ConnectionStatusLayer(BaseLayer):
 		self.redraw_image()
 		self.visible = True
 
-	def tick(self, canvas):
+	def tick(self, canvas: FrameCanvas, frame_x_offset: int = 0, frame_y_offset: int = 0):
 		if self.visible:
 			# Set the pixel in the bottom right to the current status colour
-			canvas.SetImage(self.image, canvas.width - 2, canvas.height - 2)
+			canvas.SetImage(self.image, canvas.width + frame_x_offset - 2, canvas.height + frame_y_offset - 2)
 		else:
 			# If invisible, just skip the drawing entirely.
 			pass
