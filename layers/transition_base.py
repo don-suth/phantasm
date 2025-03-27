@@ -8,7 +8,7 @@ class BaseTransition:
 		self.to_layer = to_layer
 		self.done = False
 
-	def tick(self, canvas: FrameCanvas, x_offset: int = 0, y_offset: int = 0):
+	def tick(self, canvas: FrameCanvas, frame_x_offset: int = 0, frame_y_offset: int = 0):
 		"""
 		The main logic of the transition should be applied here.
 		"""

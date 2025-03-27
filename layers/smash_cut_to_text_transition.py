@@ -15,7 +15,7 @@ class SmashCutTextTransition(BaseTransition):
 		await asyncio.sleep(2)
 		self.transition_complete = True
 
-	def tick(self, canvas: FrameCanvas, x_offset: int = 0, y_offset: int = 0):
+	def tick(self, canvas: FrameCanvas, frame_x_offset: int = 0, frame_y_offset: int = 0):
 		if self.transition_complete is False:
 			canvas.Clear()
 			canvas.DrawText(
