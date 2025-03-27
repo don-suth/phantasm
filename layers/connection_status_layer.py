@@ -59,4 +59,5 @@ class ConnectionStatusLayer(BaseLayer):
 		else:
 			# If invisible, just skip the drawing entirely.
 			pass
+		return self
 

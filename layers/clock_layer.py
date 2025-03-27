@@ -59,5 +59,6 @@ class ClockLayer(BaseLayer):
 			canvas, self.small_font, frame_x_offset + 46, frame_y_offset + 30, self.text_colour,
 			text=f"{current_time:%b}"
 		)
+		return self
 		
 		
