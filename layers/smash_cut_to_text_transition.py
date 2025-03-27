@@ -18,11 +18,11 @@ class SmashCutTextTransition(BaseTransition):
 	def tick(self, canvas: FrameCanvas, frame_x_offset: int = 0, frame_y_offset: int = 0):
 		if self.transition_complete is False:
 			canvas.Clear()
-			canvas.DrawText(
+			graphics.DrawText(
 				canvas, self.font, frame_x_offset + 7, frame_y_offset + 13,
 				graphics.Color(255, 255, 255), text="Ring"
 			)
-			canvas.DrawText(
+			graphics.DrawText(
 				canvas, self.font, frame_x_offset + 18, frame_y_offset + 27,
 				graphics.Color(255, 255, 255), text="Ring!"
 			)
