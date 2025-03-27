@@ -56,17 +56,17 @@ class AlertLayer(BaseLayer):
 				self.location_x_offset = (64 - (len(location) * 10)) // 2
 				await asyncio.sleep(5)
 
-	def tick(self, canvas: FrameCanvas, x_offset: int = 0, y_offset: int = 0):
+	def tick(self, canvas: FrameCanvas, frame_x_offset: int = 0, frame_y_offset: int = 0):
 		graphics.DrawText(
-			canvas, self.small_font, self.message_x_offset + self.meta_x_offset, 10, graphics.Color(255, 255, 255),
+			canvas, self.small_font, self.message_x_offset + frame_x_offset, frame_y_offset + 10, graphics.Color(255, 255, 255),
 			text=self.message,
 		)
 		graphics.DrawText(
-			canvas, self.font, self.location_x_offset + self.meta_x_offset, 25, graphics.Color(255, 255, 255),
+			canvas, self.font, self.location_x_offset + frame_x_offset, frame_y_offset + 25, graphics.Color(255, 255, 255),
 			text=self.location
 		)
 		graphics.DrawText(
-			canvas, self.smaller_font, 8 + self.meta_x_offset, 32, graphics.Color(255, 255, 0),
+			canvas, self.smaller_font, 8 + frame_x_offset, frame_y_offset + 32, graphics.Color(255, 255, 0),
 			text="ENTRANCE"
 		)
 		if self.message_scrolling:

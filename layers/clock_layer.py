@@ -18,7 +18,7 @@ class ClockLayer(BaseLayer):
 		self.text_colour = graphics.Color(255, 255, 0)  # Yellow
 		self.alternate_seconds_indicator = True
 
-	def tick(self, canvas: FrameCanvas, x_offset: int = 0, y_offset: int = 0):
+	def tick(self, canvas: FrameCanvas, frame_x_offset: int = 0, frame_y_offset: int = 0):
 		current_time = datetime.datetime.now()
 		current_hou = current_time.hour
 		current_min = current_time.minute
@@ -30,16 +30,16 @@ class ClockLayer(BaseLayer):
 
 		# Draw time
 		graphics.DrawText(
-			canvas, self.font, x_offset + 6, y_offset + 21, self.text_colour,
+			canvas, self.font, frame_x_offset + 6, frame_y_offset + 21, self.text_colour,
 			text=f"{current_hou:0>2}"
 		)
 		if seconds_indicator:
 			graphics.DrawText(
-				canvas, self.font, x_offset + 26, y_offset + 18, self.text_colour,
+				canvas, self.font, frame_x_offset + 26, frame_y_offset + 18, self.text_colour,
 				text=":"
 			)
 		graphics.DrawText(
-			canvas, self.font, x_offset + 34, y_offset + 21, self.text_colour,
+			canvas, self.font, frame_x_offset + 34, frame_y_offset + 21, self.text_colour,
 			text=f"{current_min:0>2}"
 		)
 		if 4 <= current_time.day <= 20 or 24 <= current_time.day <= 30:
@@ -48,15 +48,15 @@ class ClockLayer(BaseLayer):
 			day_suffix = ["st", "nd", "rd"][current_time.day % 10 - 1]
 		
 		graphics.DrawText(
-			canvas, self.small_font, x_offset + 4, y_offset + 30, self.text_colour,
+			canvas, self.small_font, frame_x_offset + 4, frame_y_offset + 30, self.text_colour,
 			text=f"{current_time:%a}"
 		)
 		graphics.DrawText(
-			canvas, self.small_font, x_offset + 23, y_offset + 30, self.text_colour,
+			canvas, self.small_font, frame_x_offset + 23, frame_y_offset + 30, self.text_colour,
 			text=f"{current_time.day: >2}{day_suffix}"
 		)
 		graphics.DrawText(
-			canvas, self.small_font, x_offset + 46, y_offset + 30, self.text_colour,
+			canvas, self.small_font, frame_x_offset + 46, frame_y_offset + 30, self.text_colour,
 			text=f"{current_time:%b}"
 		)
 		
