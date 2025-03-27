@@ -3,6 +3,7 @@ from datetime import datetime
 from layers.connection_status_layer import ConnectionStatusLayer
 from layers.clock_layer import ClockLayer
 from layers.text_layer import TextLayer
+from layers.smash_cut_to_text_transition import SmashCutTextTransition
 from layers.alert_layer import AlertLayer
 import asyncio
 from websockets.client import connect
@@ -30,7 +31,11 @@ async def main():
 			).model_dump_json()
 			await websocket.send(authentication)
 			await asyncio.sleep(4)
-			await controller.add_to_layers(AlertLayer)
+			controller.effect_layers[0] = SmashCutTextTransition(
+				matrix=controller.matrix,
+				from_layer=controller.effect_layers[0],
+				to_layer=AlertLayer(matrix=controller.matrix)
+			)
 			async for message in websocket:
 				# Process message
 				# await text_layer.add_message("WS", message)
