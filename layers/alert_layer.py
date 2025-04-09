@@ -64,6 +64,8 @@ class AlertLayer(BaseLayer):
 		self.done = True
 
 	def tick(self, canvas: FrameCanvas, frame_x_offset: int = 0, frame_y_offset: int = 0):
+		canvas.Clear()
+
 		# Draw the message
 		graphics.DrawText(
 			canvas, self.small_font, self.message_x_offset + frame_x_offset, frame_y_offset + 10, graphics.Color(255, 255, 255),
