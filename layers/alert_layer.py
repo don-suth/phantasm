@@ -48,6 +48,7 @@ class AlertLayer(BaseLayer):
 
 		# Start the countdown for the layer vanishing
 		self.completion_task = asyncio.create_task(self.delay_completion())
+		self.re_scroll_task = None
 
 	async def delay_completion(self):
 		# Ends the layer after a set amount of time
@@ -60,8 +61,20 @@ class AlertLayer(BaseLayer):
 
 	async def acknowledge(self):
 		# If the alert is acknowledged, clear it early.
-		self.completion_task.cancel()
+		if self.completion_task is not None:
+			self.completion_task.cancel()
+		if self.re_scroll_task is not None:
+			self.re_scroll_task.cancel()
 		self.done = True
+
+	async def re_scroll(self):
+		# Start re-scrolling the text after a few seconds
+		try:
+			await asyncio.sleep(5)
+			self.message_scrolling = True
+			self.message_wrap = True
+		except asyncio.CancelledError:
+			pass
 
 	def tick(self, canvas: FrameCanvas, frame_x_offset: int = 0, frame_y_offset: int = 0):
 		canvas.Clear()
@@ -103,5 +116,6 @@ class AlertLayer(BaseLayer):
 					self.message_scrolling = False
 					self.message_wrap = False
 					self.message_x_offset = 1
+					self.re_scroll_task = asyncio.create_task(self.re_scroll())
 
 		return self
