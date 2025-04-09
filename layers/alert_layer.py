@@ -48,6 +48,7 @@ class AlertLayer(BaseLayer):
 				else:
 					self.message_x_offset = (64 - (len(text) * 6)) // 2
 					self.message_scrolling = False
+					self.message_wrap = False
 				await asyncio.sleep(30)
 
 	async def location_changer(self):
@@ -94,7 +95,9 @@ class AlertLayer(BaseLayer):
 			# If the text is wrapped, stop it scrolling once the second instance
 			# reaches the left edge
 			if self.message_wrap:
-				if self.message_x_offset == -self.message_width - 20:
+				if self.message_x_offset == -self.message_width - 19:
 					self.message_scrolling = False
+					self.message_wrap = False
+					self.message_x_offset = 1
 
 		return self
