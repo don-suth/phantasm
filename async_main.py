@@ -39,7 +39,7 @@ async def main():
 			async for message in websocket:
 				# Process message
 				# await text_layer.add_message("WS", message)
-				pass
+				print(message)
 		except WebSocketException:
 			print("ws failed")
 			# All other connection problems: retry in 10 seconds
