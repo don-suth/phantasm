@@ -31,9 +31,9 @@ async def main():
 			).model_dump_json()
 			await websocket.send(authentication)
 			await asyncio.sleep(4)
-			controller.effect_layers[0] = SmashCutTextTransition(
-				matrix=controller.matrix,
-				from_layer=controller.effect_layers[0],
+			await controller.add_to_layers(
+				SmashCutTextTransition,
+				from_layer=None,
 				to_layer=AlertLayer(matrix=controller.matrix, message="Donald Sutherland", location="Tav")
 			)
 			async for message in websocket:
