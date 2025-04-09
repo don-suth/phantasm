@@ -6,8 +6,15 @@ from rgbmatrix import FrameCanvas, RGBMatrix, graphics
 TEXT_NOTIFICATIONS = (
 	("Ring", "Ring!"),
 	("Ding", "Dong!"),
-	("Alert!", "Alert!"),
 	("Beep", "Beep!"),
+)
+
+FUNNY_NOTIFICATIONS = (
+	("Look", "at me"),
+	("Bing", "Bong!"),
+	("Ring", "Rong!"),
+	("!!!!", "!!!!!"),
+	("<text", "text>"),
 )
 
 
@@ -18,7 +25,7 @@ class SmashCutTextTransition(BaseTransition):
 		self.font.LoadFont("fonts/9x15B.bdf")
 		self.countdown_task = asyncio.create_task(self.delay_transition())
 		self.transition_state = 0
-		self.display_texts = TEXT_NOTIFICATIONS[0]
+		self.display_texts = random.choice(TEXT_NOTIFICATIONS)
 
 	async def delay_transition(self):
 		while True:
@@ -34,7 +41,7 @@ class SmashCutTextTransition(BaseTransition):
 			await asyncio.sleep(2)
 
 			# Reset for testing purposes
-			self.display_texts = random.choice(TEXT_NOTIFICATIONS)
+			self.display_texts = random.choice(FUNNY_NOTIFICATIONS)
 			self.transition_state = 0
 			await asyncio.sleep(1)
 
