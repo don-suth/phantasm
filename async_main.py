@@ -34,7 +34,7 @@ async def main():
 			controller.effect_layers[0] = SmashCutTextTransition(
 				matrix=controller.matrix,
 				from_layer=controller.effect_layers[0],
-				to_layer=AlertLayer(matrix=controller.matrix)
+				to_layer=AlertLayer(matrix=controller.matrix, message="Donald Sutherland", location="Tav")
 			)
 			async for message in websocket:
 				# Process message
