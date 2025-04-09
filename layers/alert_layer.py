@@ -72,10 +72,3 @@ class AlertLayer(BaseLayer):
 		if self.message_scrolling:
 			self.message_x_offset -= 1
 		return self
-
-# graphics.DrawText(
-#	canvas, self.font, 7, 13, graphics.Color(255,255,255), text="Ring"
-# )
-# graphics.DrawText(
-#	canvas, self.font, 18, 27, graphics.Color(255, 255, 255), text="Ring!"
-# )
