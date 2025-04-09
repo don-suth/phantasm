@@ -25,25 +25,23 @@ class SmashCutTextTransition(BaseTransition):
 		self.font.LoadFont("fonts/9x15B.bdf")
 		self.countdown_task = asyncio.create_task(self.delay_transition())
 		self.transition_state = 0
-		self.display_texts = random.choice(TEXT_NOTIFICATIONS)
+		if random.random() <= 0.05:
+			# 5% chance to show something funny instead
+			self.display_texts = random.choice(FUNNY_NOTIFICATIONS)
+		else:
+			self.display_texts = random.choice(TEXT_NOTIFICATIONS)
 
 	async def delay_transition(self):
-		while True:
-			# Initially show nothing
-			await asyncio.sleep(0.01)
+		# Initially show nothing
+		await asyncio.sleep(0.01)
 
-			# Show first line of text
-			self.transition_state = 1
-			await asyncio.sleep(0.3)
+		# Show first line of text
+		self.transition_state = 1
+		await asyncio.sleep(0.3)
 
-			# Show second line of text
-			self.transition_state = 2
-			await asyncio.sleep(2)
-
-			# Reset for testing purposes
-			self.display_texts = random.choice(FUNNY_NOTIFICATIONS)
-			self.transition_state = 0
-			await asyncio.sleep(1)
+		# Show second line of text
+		self.transition_state = 2
+		await asyncio.sleep(2)
 
 		# Finish the transition
 		self.transition_state = -1
