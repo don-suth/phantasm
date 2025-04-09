@@ -36,8 +36,6 @@ async def main():
 				from_layer=None,
 				to_layer=AlertLayer(matrix=controller.matrix, message="Donald Sutherland", location="Tav")
 			)
-			await asyncio.sleep(5)
-			await controller.effect_layers[-1].acknowledge()
 			async for message in websocket:
 				# Process message
 				# await text_layer.add_message("WS", message)
