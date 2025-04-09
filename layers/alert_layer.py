@@ -11,11 +11,20 @@ class AlertLayer(BaseLayer):
 	of the display.
 	"""
 
-	def __init__(self, *args, **kwargs):
+	def __init__(
+			self,
+			*args,
+			message: str = "",
+			location: str = "",
+			message_time: int = 30,
+			**kwargs,
+	):
 		super().__init__(*args, **kwargs)
-		self.message = "???"
-		self.location = "???"
+		self.message = message
+		self.location = location
+		self.message_time = message_time
 
+		# Load and set-up fonts
 		self.font = graphics.Font()
 		self.font.LoadFont("fonts/10x20.bdf")
 		self.small_font = graphics.Font()
@@ -23,43 +32,36 @@ class AlertLayer(BaseLayer):
 		self.smaller_font = graphics.Font()
 		self.smaller_font.LoadFont("fonts/6x9.bdf")
 
-		self.message_width = 0
-		self.message_x_offset = 0
-		self.message_scrolling = False
-		self.message_wrap = False
+		# Position initial message text
+		self.message_width = len(self.message) * 6
+		if self.message_width > 64:
+			self.message_x_offset = 63
+			self.message_scrolling = True
+			self.message_wrap = True
+		else:
+			self.message_x_offset = (64 - self.message_width) // 2
+			self.message_scrolling = False
+			self.message_wrap = False
 
-		self.location_x_offset = 0
-		self.text_change_task = asyncio.create_task(self.text_changer())
-		self.location_change_task = asyncio.create_task(self.location_changer())
+		# Position initial location text
+		self.location_x_offset = (64 - (len(location) * 10)) // 2
 
+		# Start the countdown for the layer vanishing
+		self.completion_task = asyncio.create_task(self.delay_completion())
 
-	async def text_changer(self):
-		text_strings = [
-			"Jarl Vetreiði", "áàãâä éèêë íìîï óòõôö úùûü ç ñ", "日本語"
-		]
-		while True:
-			for text in text_strings:
-				self.message = text
-				self.message_width = len(text) * 6
-				if self.message_width > 64:
-					self.message_x_offset = 63
-					self.message_scrolling = True
-					self.message_wrap = True
-				else:
-					self.message_x_offset = (64 - (len(text) * 6)) // 2
-					self.message_scrolling = False
-					self.message_wrap = False
-				await asyncio.sleep(30)
+	async def delay_completion(self):
+		# Ends the layer after a set amount of time
+		try:
+			await asyncio.sleep(self.message_time)
+			self.done = True
+		except asyncio.CancelledError:
+			# Acknowledging the alert will also cancel this task.
+			pass
 
-	async def location_changer(self):
-		locations = [
-			"Tav", "Guild",
-		]
-		while True:
-			for location in locations:
-				self.location = location
-				self.location_x_offset = (64 - (len(location) * 10)) // 2
-				await asyncio.sleep(5)
+	async def acknowledge(self):
+		# If the alert is acknowledged, clear it early.
+		self.completion_task.cancel()
+		self.done = True
 
 	def tick(self, canvas: FrameCanvas, frame_x_offset: int = 0, frame_y_offset: int = 0):
 		# Draw the message
