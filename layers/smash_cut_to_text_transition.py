@@ -6,8 +6,8 @@ from rgbmatrix import FrameCanvas, RGBMatrix, graphics
 TEXT_NOTIFICATIONS = (
 	("Ring", "Ring!"),
 	("Ding", "Dong!"),
-	("Hello", "there"),
-	("Look", "at me"),
+	("Alert!", "Alert!"),
+	("Beep", "Beep!"),
 )
 
 
@@ -51,7 +51,7 @@ class SmashCutTextTransition(BaseTransition):
 				)
 			if self.transition_state >= 2:
 				graphics.DrawText(
-					canvas, self.font, frame_x_offset + 18, frame_y_offset + 27,
+					canvas, self.font, frame_x_offset + 15, frame_y_offset + 27,
 					graphics.Color(255, 255, 255), text=self.display_texts[1],
 				)
 			return self
