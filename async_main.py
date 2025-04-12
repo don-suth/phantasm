@@ -9,7 +9,10 @@ import asyncio
 from websockets.client import connect
 from websockets.exceptions import WebSocketException
 from ritual_events.from_phantasm import AuthenticateAction, AuthenticateData
+from ritual_events.to_phantasm import LetMeInAction
+from pydantic import ValidationError
 import os
+import json
 
 
 async def main():
@@ -30,16 +33,23 @@ async def main():
 				time=datetime.now()
 			).model_dump_json()
 			await websocket.send(authentication)
-			await asyncio.sleep(4)
-			await controller.add_to_layers(
-				SmashCutTextTransition,
-				from_layer=None,
-				to_layer=AlertLayer(matrix=controller.matrix, message="Donald Sutherland", location="Tav")
-			)
 			async for message in websocket:
 				# Process message
 				# await text_layer.add_message("WS", message)
-				print(message)
+				try:
+					message_model = LetMeInAction.model_validate_json(message)
+				except ValidationError:
+					pass
+				else:
+					await controller.add_to_layers(
+						SmashCutTextTransition,
+						from_layer=None,
+						to_layer=AlertLayer(
+							matrix=controller.matrix,
+							message=message_model.data.name,
+							location=message_model.data.entrance
+						)
+					)
 		except WebSocketException:
 			print("ws failed")
 			# All other connection problems: retry in 10 seconds
