@@ -9,7 +9,7 @@ import asyncio
 from websockets.client import connect
 from websockets.exceptions import WebSocketException
 from ritual_events.from_phantasm import AuthenticateAction, AuthenticateData
-from ritual_events.to_phantasm import LetMeInAction
+from ritual_events.to_phantasm import LetMeInAction, ReceivedAction
 from pydantic import ValidationError
 import os
 import json
@@ -37,19 +37,28 @@ async def main():
 				# Process message
 				# await text_layer.add_message("WS", message)
 				try:
-					message_model = LetMeInAction.model_validate_json(message)
+					message_model = ReceivedAction.model_validate_json(message).action
 				except ValidationError:
 					pass
 				else:
-					await controller.add_to_layers(
-						SmashCutTextTransition,
-						from_layer=None,
-						to_layer=AlertLayer(
-							matrix=controller.matrix,
-							message=message_model.data.name,
-							location=message_model.data.entrance
-						)
-					)
+					match message_model.action:
+						case "LetMeIn":
+							await controller.add_to_layers(
+								SmashCutTextTransition,
+								from_layer=None,
+								to_layer=AlertLayer(
+									matrix=controller.matrix,
+									message=message_model.data.name,
+									location=message_model.data.entrance
+								)
+							)
+						case "ClockSettingsUpdate":
+							print("Got new clock settings!")
+							print(message_model)
+						case "FoodRun":
+							print("Got food run stuff!")
+							print(message_model)
+						
 		except WebSocketException:
 			print("ws failed")
 			# All other connection problems: retry in 10 seconds
