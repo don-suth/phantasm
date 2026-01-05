@@ -1,6 +1,7 @@
 import asyncio
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
 from layers.base_layer import BaseLayer
+from layers.sleeping_layer import SleepingLayer
 
 
 class MatrixController:
@@ -29,6 +30,9 @@ class MatrixController:
 		self.matrix = RGBMatrix(options=options)
 		self.effect_layers: list[BaseLayer] = []
 		self.tick_rate = 0.02
+
+		self.closed = False
+		self.closed_layer = None
 	
 	async def run(self):
 		print("Running... Press CTRL-C to stop")
@@ -50,3 +54,14 @@ class MatrixController:
 	
 	def set_brightness(self, brightness: int):
 		self.matrix.brightness = brightness
+
+	async def set_closed(self):
+		self.closed = True
+		if self.closed and self.closed_layer is None:
+			self.closed_layer = await self.add_to_layers(SleepingLayer)
+
+	async def set_open(self):
+		self.closed = False
+		if not self.closed and self.closed_layer is not None:
+			self.closed_layer.done = True
+			self.closed_layer = None
