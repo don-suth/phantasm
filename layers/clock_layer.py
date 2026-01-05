@@ -61,4 +61,8 @@ class ClockLayer(BaseLayer):
 		)
 		return self
 		
-		
+	def set_colour(self, red: int, green: int, blue: int):
+		self.text_colour = graphics.Color(red, green, blue)
+
+	def set_seconds(self, alternating: bool):
+		self.alternate_seconds_indicator = alternating
