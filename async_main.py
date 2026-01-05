@@ -60,8 +60,8 @@ async def main():
 								location=entrance
 							)
 						)
-					case UpdateClockSettingsEvent():
-						print("Received new clock settings!")
+					case UpdateClockSettingsEvent(new_brightness=brightness, new_text_colour=new_colour, alternate_seconds=seconds):
+						print(f"{brightness=} {new_colour=} {seconds=}")
 					case _:
 						pass
 						
