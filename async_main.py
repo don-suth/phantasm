@@ -13,6 +13,8 @@ from ritual_events.to_phantasm import (
 	LetMeInEvent,
 	FoodRunEvent,
 	UpdateClockSettingsEvent,
+	OpenDoorEvent,
+	CloseDoorEvent,
 	validate_to_phantasm_json,
 )
 from pydantic import ValidationError
@@ -64,6 +66,10 @@ async def main():
 						clock_layer.set_colour(*(new_colour.as_rgb_tuple(alpha=False)))
 						clock_layer.set_seconds(seconds)
 						controller.set_brightness(brightness)
+					case OpenDoorEvent():
+						await controller.set_open()
+					case CloseDoorEvent():
+						await controller.set_closed()
 					case _:
 						pass
 						
