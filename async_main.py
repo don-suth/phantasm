@@ -61,7 +61,11 @@ async def main():
 							)
 						)
 					case UpdateClockSettingsEvent(new_brightness=brightness, new_text_colour=new_colour, alternate_seconds=seconds):
-						print(f"{brightness=} {new_colour=} {seconds=}")
+						clock_layer.set_colour(*(new_colour.as_rgb_tuple(alpha=False)))
+						clock_layer.set_seconds(seconds)
+						controller.set_brightness(brightness)
+						r, g, b = new_colour.as_rgb_tuple(alpha=False)
+						print(f"{brightness=} {r=} {g=} {b=} {seconds=}")
 					case _:
 						pass
 						
