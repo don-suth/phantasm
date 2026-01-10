@@ -14,13 +14,16 @@ class SleepingLayer(BaseLayer):
 	async def delay_state_change(self):
 		while not self.done:
 			await asyncio.sleep(1.5)
-			self.state = (self.state + 1) % 6
+			self.state = (self.state + 1) % 10
 			if self.state == 0:
 				await asyncio.sleep(8)
 
 	def tick(self, canvas: FrameCanvas, frame_x_offset: int = 0, frame_y_offset: int = 0):
 		canvas.Clear()
-		message = ("z"*self.state).capitalize()
+		if self.state < 6:
+			message = ("z"*self.state).capitalize()
+		else:
+			message = ("z"*(10-self.state)).rjust(5)
 		graphics.DrawText(
 			canvas, self.font, frame_x_offset + 2, frame_y_offset + 23,
 			graphics.Color(255, 255, 255), text=message
