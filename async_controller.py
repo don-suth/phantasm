@@ -33,6 +33,7 @@ class MatrixController:
 
 		self.closed = False
 		self.closed_layer = None
+		self.stored_brightness = 0
 	
 	async def run(self):
 		print("Running... Press CTRL-C to stop")
@@ -58,10 +59,13 @@ class MatrixController:
 	async def set_closed(self):
 		self.closed = True
 		if self.closed and self.closed_layer is None:
+			self.stored_brightness = self.matrix.brightness
+			self.set_brightness(30)
 			self.closed_layer = await self.add_to_layers(SleepingLayer)
 
 	async def set_open(self):
 		self.closed = False
 		if not self.closed and self.closed_layer is not None:
 			self.closed_layer.done = True
+			self.set_brightness(self.stored_brightness)
 			self.closed_layer = None
