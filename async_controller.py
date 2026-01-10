@@ -54,7 +54,14 @@ class MatrixController:
 		return new_layer
 	
 	def set_brightness(self, brightness: int):
-		self.matrix.brightness = brightness
+		"""
+		Adjust the brightness of the display.
+		If the door is closed, instead adjust the stored brightness.
+		"""
+		if self.closed:
+			self.stored_brightness = brightness
+		else:
+			self.matrix.brightness = brightness
 
 	async def set_closed(self):
 		self.closed = True
