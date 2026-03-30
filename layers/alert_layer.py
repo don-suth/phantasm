@@ -53,7 +53,9 @@ class AlertLayer(BaseLayer):
 	async def delay_completion(self):
 		# Ends the layer after a set amount of time
 		try:
-			await asyncio.sleep(self.message_time)
+			while self.message_time > 0:
+				await asyncio.sleep(1)
+				self.message_time -= 1
 			self.done = True
 		except asyncio.CancelledError:
 			# Acknowledging the alert will also cancel this task.
