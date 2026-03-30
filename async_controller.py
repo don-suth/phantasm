@@ -65,14 +65,15 @@ class MatrixController:
 	async def run_alert_layers(self):
 		while True:
 			name, entrance = await self.alert_queue.get()
+			new_layer = AlertLayer(
+				matrix=self.matrix,
+				message=name,
+				location=entrance
+			)
 			new_layer = await self.add_to_layers(
 				SmashCutTextTransition,
 				from_layer=None,
-				to_layer=AlertLayer(
-					matrix=self.matrix,
-					message=name,
-					location=entrance
-				)
+				to_layer=new_layer
 			)
 			await new_layer.is_done()
 	
