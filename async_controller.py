@@ -70,7 +70,7 @@ class MatrixController:
 				message=name,
 				location=entrance
 			)
-			new_layer = await self.add_to_layers(
+			await self.add_to_layers(
 				SmashCutTextTransition,
 				from_layer=None,
 				to_layer=new_layer
