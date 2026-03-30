@@ -1,3 +1,4 @@
+import asyncio
 from rgbmatrix import RGBMatrix, FrameCanvas
 
 
@@ -11,5 +12,10 @@ class BaseLayer:
 		The main logic of the effect should be applied here.
 		"""
 		raise NotImplemented("Implement your own tick logic.")
+
+	async def is_done(self):
+		while not self.done:
+			await asyncio.sleep(0)
+		return True
 	
 	
