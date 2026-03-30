@@ -43,25 +43,9 @@ async def main():
 				event = validate_to_phantasm_json(message)
 				match event:
 					case LetMeInEvent(name=name, entrance=entrance):
-						await controller.add_to_layers(
-							SmashCutTextTransition,
-							from_layer=None,
-							to_layer=AlertLayer(
-								matrix=controller.matrix,
-								message=name,
-								location=entrance
-							)
-						)
+						await controller.enqueue_letmein_alert(name, entrance)
 					case FoodRunEvent(entrance=entrance, arrival_time=arrival_time):
-						await controller.add_to_layers(
-							SmashCutTextTransition,
-							from_layer=None,
-							to_layer=AlertLayer(
-								matrix=controller.matrix,
-								message=f"Food run arriving at {arrival_time}",
-								location=entrance
-							)
-						)
+						await controller.enqueue_letmein_alert(name=f"Food run arriving at {arrival_time}", entrance=entrance)
 					case UpdateClockSettingsEvent(new_brightness=brightness, new_text_colour=new_colour, alternate_seconds=seconds):
 						clock_layer.set_colour(*(new_colour.as_rgb_tuple(alpha=False)))
 						clock_layer.set_seconds(seconds)
