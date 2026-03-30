@@ -2,6 +2,8 @@ import asyncio
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
 from layers.base_layer import BaseLayer
 from layers.sleeping_layer import SleepingLayer
+from layers.smash_cut_to_text_transition import SmashCutTextTransition
+from layers.alert_layer import AlertLayer
 
 
 class MatrixController:
@@ -34,10 +36,14 @@ class MatrixController:
 		self.closed = False
 		self.closed_layer = None
 		self.stored_brightness = 0
+
+		self.alert_queue = asyncio.Queue()
+		self.alert_task = None
 	
 	async def run(self):
 		print("Running... Press CTRL-C to stop")
 		frame_canvas = self.matrix.CreateFrameCanvas()
+		self.alert_task = asyncio.create_task(self.run_alert_layers())
 		while True:
 			for i in range(len(self.effect_layers)):
 				self.effect_layers[i] = self.effect_layers[i].tick(frame_canvas, frame_x_offset=0, frame_y_offset=0)
@@ -52,6 +58,23 @@ class MatrixController:
 		new_layer = effect_class(self.matrix, *args, **kwargs)
 		self.effect_layers.append(new_layer)
 		return new_layer
+
+	async def enqueue_letmein_alert(self, name, entrance):
+		await self.alert_queue.put((name, entrance))
+
+	async def run_alert_layers(self):
+		while True:
+			name, entrance = await self.alert_queue.get()
+			new_layer = await self.add_to_layers(
+				SmashCutTextTransition,
+				from_layer=None,
+				to_layer=AlertLayer(
+					matrix=self.matrix,
+					message=name,
+					location=entrance
+				)
+			)
+			await new_layer.is_done()
 	
 	def set_brightness(self, brightness: int):
 		"""
